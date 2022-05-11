@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="dark light">
+        <title>REF21C1 What is Cocoa? - 卡片盒</title>
+        <link rel="apple-touch-icon" href='./apple-touch-icon.png'>
+        <link rel="shortcut icon" href='./icon.png'>
+        <link rel="mask-icon" href='./mask-icon.svg' color="#4682b4">
+        <meta name="description" content="介绍 Cocoa 的功能、框架和开发环境。">
+        <meta name="author" content="杨林青">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href='./chroma/syntax.css'>
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href='./chroma/dracula.css'>
+        <link rel="stylesheet" href='./style.css'>
+        <script defer src='./fontawesome/all.min.js'></script>
+    </head>
+    <body>
+        <header>
+            <kb:title>
+                <aside>章节</aside>
+                <b>REF21C1 What is Cocoa?</b>
+            </kb:title>
+        </header>
+        <main>
+            <kb:title>
+                <aside>章节</aside>
+                <h1>REF21C1 What is Cocoa?</h1>
+            </kb:title>
+            <kb:description>介绍 Cocoa 的功能、框架和开发环境。</kb:description>
+            <kb:content><p>章节链接: <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html#//apple_ref/doc/uid/TP40002974-CH3-SW16">https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html#//apple_ref/doc/uid/TP40002974-CH3-SW16</a></p>
+<aside class=''>
+    <p><strong>文献卡片备注</strong><br>
+　　此卡片为文献卡片。文献卡片使用精炼的语言总结原始文献的内容，并可能带有指向其他卡片的链接。文献卡片不追求完整还原原始文献，建议读者结合此类卡片完整阅读原始文献。</p>
+
+</aside>
+<h2 id="1-the-cocoa-environment">1 The Cocoa Environment</h2>
+<p>　　Cocoa 是一个面向对象的框架，为 OS X 和 iOS 应用提供运行环境。OS X 上的 Carbon 是面向过程的框架。</p>
+<h2 id="11-introducing-cocoa">1.1 Introducing Cocoa</h2>
+<p>　　小知识：Cocoa 发布于 1989 年，最初是 NextSTEP。<br>
+　　Cocoa 框架主要配合 Objective-C 语言使用。OC 是 ANSI C 的超集，扩展了面向对象编程的语法。小知识：这些语法从 Smalltalk 语言发展而来。见本章第五节 <a href="#5">A Bit of History</a>。<br>
+　　Cocoa 最重要的两个类库分别是 Foundation 和 AppKit/UIKit。</p>
+<h2 id="12-how-cocoa-fits-into-os-x">1.2 How Cocoa Fits into OS X</h2>
+<p>　　OS X 层级结构（自顶向下）：</p>
+<ul>
+<li>User Experience<br>
+Aqua, Dashboard, Spotlight, Accessibility</li>
+<li>Application Frameworks<br>
+Carbon, Java, AppKit</li>
+<li>Graphics and Media (Application Services)<br>
+Cora Animation, Core Image, Core Video, QuickTime, OpenGL, Quartz, Core Audio</li>
+<li>Core Services<br>
+Carbon Core, Launch Service, Core Foundation, Foundation</li>
+<li>Darwin</li>
+</ul>
+<p>　　Foundation 框架定义对象的基本行为，提供对象管理机制，提供基本类、集合类和系统服务对象。Foundation 框架相当于 Core Foundation 框架的面向对象版。</p>
+<h2 id="2-features-of-a-cocoa-application">2 Features of a Cocoa Application</h2>
+<p>　　这一节介绍了 Cocoa 为应用程序开发提供的便利。具体内容请见<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html#//apple_ref/doc/uid/TP40002974-CH3-SW6">原文</a>。</p>
+<h2 id="3-the-development-environment">3 The Development Environment</h2>
+<h2 id="33-xcode">3.3 Xcode</h2>
+<p>　　竟然还有 Objective-C++ 这种语言！当时的 Xcode 界面看起来与现在也大不相同。当时似乎还没有 Git？<br>
+　　编译工具的细节见 <a href="https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/000-Introduction/Introduction.html#//apple_ref/doc/uid/TP40006904">Xcode Build System Guide</a>。</p>
+<h2 id="4-the-cocoa-frameworks">4 The Cocoa Frameworks</h2>
+<p>　　Cocoa 应用使用一个共同的根类——NSObject。尽管 Foundation 框架提供了另一个根类——NSProxy，但是很少用在 Cocoa 程序中。在 OC 中也可以定义自己的根类，不过需要编写大量与 OC 运行时交互的代码。</p>
+<h2 id="41-foundation">4.1 Foundation</h2>
+<h2 id="411-foundation-paradigms-and-policies">4.1.1 Foundation Paradigms and Policies</h2>
+<p>　　Foundation 框架包含一些范式和策略。</p>
+<ul>
+<li><strong>类的可变版本</strong>：许多值类和容器类都有一个可变的版本，可变类永远是不可变类的子类。</li>
+<li><strong>类簇</strong>：类簇是一个抽象类和多个具体类，抽象类用作接口。根据上下文，特定的具体类会被使用。<br>
+<aside class=''>
+    <p><strong>批注</strong><br>
+看起来与 Java 的抽象类类似。</p>
+
+</aside></li>
+<li><strong>通知</strong>：这是 Cocoa 中的一个主要设计模式。依赖广播机制，让对象（观察者）知道另一个对象在做什么或者发生了什么系统事件。发出消息的对象可以不知道观察者的信息。有三种通知：同步通知、异步通知、分布通知。Foundation 的通知机制通过这几个类实现：<code>NSNotification</code>、<code>NSNotificationCenter</code>、<code>NSnotificationQueue</code>、<code>NSDistributedNotificationCenter</code>。</li>
+</ul>
+<h2 id="412-foundation-classes">4.1.2 Foundation Classes</h2>
+<h2 id="4121-value-objects">4.1.2.1 Value Objects</h2>
+<p>　　值对象包装基本数据类型（包括字符串、整型、浮点类型、日期、结构体和指针）的值。当比较两个值对象时比较的是其存储的值而非指针值。值对象常常用作其他对象的属性。除了值对象外，你也可以直接使用标量。</p>
+<h2 id="4122-集合">4.1.2.2 集合</h2>
+<p>　　NSArray、NSDictionary、NSSet。</p>
+<h2 id="42-appkit-os-x">4.2 AppKit (OS X)</h2>
+<h2 id="4.2.1">4.2.1 Overview of the AppKit Framework</h2>
+<h2 id="5">5 A Bit of History</h2>
+<p>　　最初的 NeXTSTEP 发布于 1989 年，是一个基于 Mach 内核的操作系统。当时还没有 Foundation，动态库被称作 “Kit”。NeXTSTEP 包括 Application Kit、Sound Kit、Music Kit 和 Display PostScript 等技术。如今的 Foundation 框架在当时是 Application Kit 中定义的函数、结构体、常量和其他类型。<br>
+　　1993 年，OpenStep 出现。OpenStep 主要将 NextStep 中的 Application Kit 和 Display PostScript 移植到 Solaris。1994 年 OpenStep API 发布，首次将 Application Kit 和 Foundation 分开，并且使用 NS 前缀。<br>
+　　1997 年 Apple 收购 NeXT Software，OpenStep 变成 “Yello Box”，随 OS X Server 发布。随着 OS X 发展，最终被命名为 Cocoa。<br>
+　　</p>
+<h2 id="修订记录">修订记录</h2>
+<h3 id="2022-05-11t1431160800">2022-05-11T14:31:16+08:00</h3>
+<ul>
+<li>创建。</li>
+</ul>
+<h3 id="2022-05-11t1731020800">2022-05-11T17:31:02+08:00</h3>
+<ul>
+<li>读完 <a href="#4.2.1">4.2.1 Overview of the AppKit Framework</a> 和 <a href="#5">5 A Bit of History</a>。</li>
+</ul>
+</kb:content>
+        </main>
+        <footer>
+        <section>
+    <h2>相关内容</h2>
+    
+    <kb:topic>
+        <h3>下一页</h3>
+        <ul>
+        
+            
+            
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+    <kb:topic>
+        <h3>所属书籍</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><i class="fas fa-book content-type"></i><a href="./ref21.html">REF21 Cocoa Fundamentals Guide</a>
+    </p>
+    <p>介绍 Cocoa 的功能、概念、术语、结构和设计模式。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+    <kb:topic>
+        <h3>卡片和链接</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><span class="content-type">索引</span><a href="./">卡片盒</a>
+    </p>
+    <p>我的公开卡片盒，使用 HUGO 构建。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+</section><section class="info"><p>© 2022 杨林青</p></section>
+        <script src='./title.js'></script>
+        <script src='./mermaid/min.js'></script>
+        <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'neutral'});</script>
+        
+            <script src='./completeTOC.js'></script>
+        </footer>
+    </body>
+</html>

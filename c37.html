@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="dark light">
+        <title>C37 - 配置Ubuntu容器镜像的时区和语言 - 卡片盒</title>
+        <link rel="apple-touch-icon" href='./apple-touch-icon.png'>
+        <link rel="shortcut icon" href='./icon.png'>
+        <link rel="mask-icon" href='./mask-icon.svg' color="#4682b4">
+        <meta name="description" content="编写 Dockerfile，指定时区和语言。">
+        <meta name="author" content="杨林青">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href='./chroma/syntax.css'>
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href='./chroma/dracula.css'>
+        <link rel="stylesheet" href='./style.css'>
+        <script defer src='./fontawesome/all.min.js'></script>
+    </head>
+    <body>
+        <header>
+            <kb:title>
+                <aside>卡片</aside>
+                <b>C37 - 配置Ubuntu容器镜像的时区和语言</b>
+            </kb:title>
+        </header>
+        <main>
+            <kb:title>
+                <aside>卡片</aside>
+                <h1>C37 - 配置Ubuntu容器镜像的时区和语言</h1>
+            </kb:title>
+            <kb:description>编写 Dockerfile，指定时区和语言。</kb:description>
+            <kb:content><p>　　使用容器一段时间后我发现容器默认使用英语，0 时区。这样使用起来不太方便，因此这里记录我配置时区和语言的方法。</p>
+<h2 id="dockerfile-内容">Dockerfile 内容：</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> ubuntu</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">USER</span><span class="s"> root</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt-get update <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt-get install -y locales tzdata <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt-get autoremove -y <span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    rm /var/lib/apt/lists/* -r <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    sed -i <span class="s1">&#39;/zh_CN.UTF-8/s/^# //g&#39;</span> /etc/locale.gen <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     locale-gen  <span class="o">&amp;&amp;</span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     dpkg-reconfigure -f noninteractive tzdata<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> LANG zh_CN.UTF-8<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> LANGUAGE zh_CN:zh<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> LC_ALL zh_CN.UTF-8<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENTRYPOINT</span> <span class="p">[</span> <span class="s2">&#34;/bin/bash&#34;</span> <span class="p">]</span><span class="err">
+</span></span></span></code></pre></div><h2 id="配置语言">配置语言</h2>
+<p>　　参考 <a href="https://docs.microsoft.com/zh-cn/java/openjdk/containers#default-locale">Microsoft JDK 的文档</a>为容器配置语言。第 6 行下载 locales，第 9、10、13～15 行配置中文语言。</p>
+<h2 id="配置时区">配置时区</h2>
+<p>　　参考《Set timezone in your docker image》配置容器的时区。这里采用链接时区文件方式配置时区。第 6 行下载 tzdata，第 11、12 行链接时区文件。</p>
+<h2 id="精简容器层">精简容器层</h2>
+<p>　　每一个 RUN 指令会创建一个新的容器层。为了避免创建太多层，我把所有的 Shell 指令放在一个 RUN 指令中。第 7、8 行清理了 apt-get 产生的垃圾文件。13～15 行配置的环境变量会在最终运行的容器中生效。</p>
+<h2 id="修订记录">修订记录</h2>
+<h3 id="2022-05-07t1451140800">2022-05-07T14:51:14+08:00</h3>
+<ul>
+<li>创建。</li>
+</ul>
+</kb:content>
+        </main>
+        <footer>
+        <section>
+    <h2>相关内容</h2>
+    
+    <kb:topic>
+        <h3>参考内容</h3>
+        <ul>
+        
+            
+            
+                <li>
+    <p><i class="fas fa-link content-type"></i><a href="https://docs.microsoft.com/zh-cn/java/openjdk/containers#default-locale" target="_blank">Microsoft JDK Container</a>
+    </p>
+    <p>在容器中使用 Microsoft JDK。</p>
+</li>
+            
+        
+            
+            
+                <li>
+    <p><i class="fas fa-link content-type"></i><a href="https://dev.to/0xbf/set-timezone-in-your-docker-image-d22" target="_blank">Set timezone in your docker image</a>
+    </p>
+    <p></p>
+</li>
+            
+        
+        </ul>
+    </kb:topic>
+    
+    <kb:topic>
+        <h3>卡片和链接</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><span class="content-type">索引</span><a href="./">卡片盒</a>
+    </p>
+    <p>我的公开卡片盒，使用 HUGO 构建。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+</section><section class="info"><p>© 2022 杨林青</p></section>
+        <script src='./title.js'></script>
+        <script src='./mermaid/min.js'></script>
+        <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'neutral'});</script>
+        
+            <script src='./completeTOC.js'></script>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>卡片盒</title>
+    <link>https://example.org/</link>
+    <description>Recent content on 卡片盒</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 10 May 2022 14:59:38 +0800</lastBuildDate><atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>REF21C1 What is Cocoa?</title>
+      <link>https://example.org/ref21c1.html</link>
+      <pubDate>Wed, 11 May 2022 14:54:52 +0800</pubDate>
+      
+      <guid>https://example.org/ref21c1.html</guid>
+      <description>章节链接: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html#//apple_ref/doc/uid/TP40002974-CH3-SW16
+文献卡片备注
+此卡片为文献卡片。文献卡片使用精炼的语言总结原始文献的内容，并可能带有指向其他卡片的链接。文献卡片不追求完整还原原始文献，建议读者结合此类卡片完整阅读原始文献。
+ 1 The Cocoa Environment 　Cocoa 是一个面向对象的框架，为 OS X 和 iOS 应用提供运行环境。OS X 上的 Carbon 是面向过程的框架。
+1.1 Introducing Cocoa 　小知识：Cocoa 发布于 1989 年，最初是 NextSTEP。
+Cocoa 框架主要配合 Objective-C 语言使用。OC 是 ANSI C 的超集，扩展了面向对象编程的语法。小知识：这些语法从 Smalltalk 语言发展而来。见本章第五节 A Bit of History。
+Cocoa 最重要的两个类库分别是 Foundation 和 AppKit/UIKit。
+1.2 How Cocoa Fits into OS X 　OS X 层级结构（自顶向下）：
+ User Experience
+Aqua, Dashboard, Spotlight, Accessibility Application Frameworks
+Carbon, Java, AppKit Graphics and Media (Application Services)</description>
+    </item>
+    
+    <item>
+      <title>C2 卡片盒编码方案</title>
+      <link>https://example.org/c2.html</link>
+      <pubDate>Wed, 11 May 2022 12:28:27 +0800</pubDate>
+      
+      <guid>https://example.org/c2.html</guid>
+      <description>1 编号方案  文件内标题按照多级标题的方法编号，均使用“二级标题”样式。 插入内容时，如果不影响后续编号，可以直接插入。如果影响，后接字母、数字、字母。例如，要在编号2和3之间插入两个内容，新插入的内容编号为2A、2B。 如果一个内容已经有唯一编号，如 “RFC XXXX”，那么使用这个编号。 如果已有编号的字母和数字之间有空格，那么保留空格。自行编号的，如果编号字母大于1位，那么添加一个空格。其他情况下字母和数字之间无空格。例如，“RFC XXXX”、“WWDC21-XXXX”、“C2”。 文件名只包含编号，空格替换为短横线。  2 编号类型 C - 卡片。 A - 编写或者归档的文章。 REF - 引用的文章或章节。这些卡片均为文献卡片。 RFC - 互联网上的 RFC 文档。 GB - 国家标准。 修订记录 2022-03-31T10:49:34+0800  删除多级目录的编码规则。 将分隔符改为短横线，类型字母与编号之间使用空格。 增加编号类型列表。  2022-04-01T17:29:43+0800  删除日志文件夹的描述。 删除子文件夹编号规则，删除使用0号编号实现页面包含的规则。  2022-04-04T22:26:39+08:00  删除包含关系的编号规则。 增加卡片内段落的引用规则。  2022-05-11T14:21:41+08:00  删除与Web卡片盒无关的内容。  </description>
+    </item>
+    
+    <item>
+      <title>REF21 Cocoa Fundamentals Guide</title>
+      <link>https://example.org/ref21.html</link>
+      <pubDate>Wed, 11 May 2022 11:17:14 +0800</pubDate>
+      
+      <guid>https://example.org/ref21.html</guid>
+      <description>图书链接: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html
+文献卡片备注
+此卡片为文献卡片。文献卡片使用精炼的语言总结原始文献的内容，并可能带有指向其他卡片的链接。文献卡片不追求完整还原原始文献，建议读者结合此类卡片完整阅读原始文献。
+ 过时的文档
+原书已被标记为“Retired document”，一些内容可能已经不适用于现在的环境。
+ 修订记录 2022-05-11T11:17:14+08:00  创建。  </description>
+    </item>
+    
+    <item>
+      <title>C37 - 配置Ubuntu容器镜像的时区和语言</title>
+      <link>https://example.org/c37.html</link>
+      <pubDate>Sat, 07 May 2022 14:51:14 +0800</pubDate>
+      
+      <guid>https://example.org/c37.html</guid>
+      <description>使用容器一段时间后我发现容器默认使用英语，0 时区。这样使用起来不太方便，因此这里记录我配置时区和语言的方法。
+Dockerfile 内容： FROMubuntuUSERrootRUN DEBIAN_FRONTEND=noninteractive apt-get update &amp;amp;&amp;amp; \  DEBIAN_FRONTEND=noninteractive apt-get install -y locales tzdata &amp;amp;&amp;amp; \  DEBIAN_FRONTEND=noninteractive apt-get autoremove -y &amp;amp;&amp;amp; apt-get clean &amp;amp;&amp;amp; \  rm /var/lib/apt/lists/* -r &amp;amp;&amp;amp; \  sed -i &amp;#39;/zh_CN.UTF-8/s/^# //g&amp;#39; /etc/locale.gen &amp;amp;&amp;amp; \  locale-gen &amp;amp;&amp;amp;\  ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;amp;&amp;amp; \  dpkg-reconfigure -f noninteractive tzdataENV LANG zh_CN.UTF-8ENV LANGUAGE zh_CN:zhENV LC_ALL zh_CN.UTF-8ENTRYPOINT [ &amp;#34;/bin/bash&amp;#34; ]配置语言 　参考 Microsoft JDK 的文档为容器配置语言。第 6 行下载 locales，第 9、10、13～15 行配置中文语言。</description>
+    </item>
+    
+  </channel>
+</rss>

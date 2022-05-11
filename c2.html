@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="dark light">
+        <title>C2 卡片盒编码方案 - 卡片盒</title>
+        <link rel="apple-touch-icon" href='./apple-touch-icon.png'>
+        <link rel="shortcut icon" href='./icon.png'>
+        <link rel="mask-icon" href='./mask-icon.svg' color="#4682b4">
+        <meta name="description" content="此卡片盒内所有内容的编码说明。">
+        <meta name="author" content="杨林青">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href='./chroma/syntax.css'>
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href='./chroma/dracula.css'>
+        <link rel="stylesheet" href='./style.css'>
+        <script defer src='./fontawesome/all.min.js'></script>
+    </head>
+    <body>
+        <header>
+            <kb:title>
+                <aside>卡片</aside>
+                <b>C2 卡片盒编码方案</b>
+            </kb:title>
+        </header>
+        <main>
+            <kb:title>
+                <aside>卡片</aside>
+                <h1>C2 卡片盒编码方案</h1>
+            </kb:title>
+            <kb:description>此卡片盒内所有内容的编码说明。</kb:description>
+            <kb:content><h2 id="1-编号方案">1 编号方案</h2>
+<ol>
+<li>文件内标题按照多级标题的方法编号，均使用“二级标题”样式。</li>
+<li>插入内容时，如果不影响后续编号，可以直接插入。如果影响，后接字母、数字、字母。例如，要在编号2和3之间插入两个内容，新插入的内容编号为2A、2B。</li>
+<li>如果一个内容已经有唯一编号，如 “RFC XXXX”，那么使用这个编号。</li>
+<li>如果已有编号的字母和数字之间有空格，那么保留空格。自行编号的，如果编号字母大于1位，那么添加一个空格。其他情况下字母和数字之间无空格。例如，“RFC XXXX”、“WWDC21-XXXX”、“C2”。</li>
+<li>文件名只包含编号，空格替换为短横线。</li>
+</ol>
+<h2 id="2-编号类型">2 编号类型</h2>
+<pre tabindex="0"><code>C   - 卡片。
+A   - 编写或者归档的文章。
+REF - 引用的文章或章节。这些卡片均为文献卡片。
+RFC - 互联网上的 RFC 文档。
+GB  - 国家标准。
+</code></pre><h2 id="修订记录">修订记录</h2>
+<h3 id="2022-03-31t1049340800">2022-03-31T10:49:34+0800</h3>
+<ul>
+<li>删除多级目录的编码规则。</li>
+<li>将分隔符改为短横线，类型字母与编号之间使用空格。</li>
+<li>增加编号类型列表。</li>
+</ul>
+<h3 id="2022-04-01t1729430800">2022-04-01T17:29:43+0800</h3>
+<ul>
+<li>删除日志文件夹的描述。</li>
+<li>删除子文件夹编号规则，删除使用0号编号实现页面包含的规则。</li>
+</ul>
+<h3 id="2022-04-04t2226390800">2022-04-04T22:26:39+08:00</h3>
+<ul>
+<li>删除包含关系的编号规则。</li>
+<li>增加卡片内段落的引用规则。</li>
+</ul>
+<h3 id="2022-05-11t1421410800">2022-05-11T14:21:41+08:00</h3>
+<ul>
+<li>删除与Web卡片盒无关的内容。</li>
+</ul>
+</kb:content>
+        </main>
+        <footer>
+        <section>
+    <h2>相关内容</h2>
+    
+    <kb:topic>
+        <h3>卡片和链接</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><span class="content-type">索引</span><a href="./">卡片盒</a>
+    </p>
+    <p>我的公开卡片盒，使用 HUGO 构建。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+</section><section class="info"><p>© 2022 杨林青</p></section>
+        <script src='./title.js'></script>
+        <script src='./mermaid/min.js'></script>
+        <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'neutral'});</script>
+        
+            <script src='./completeTOC.js'></script>
+        </footer>
+    </body>
+</html>
