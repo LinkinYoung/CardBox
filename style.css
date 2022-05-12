@@ -1,6 +1,8 @@
 /* 变量表 */
 :root {
     line-height: 1.5;
+    scroll-padding-top: 2rem;
+
     color: var(--text-color);
     --page-max-width: 700px;
     --page-padding: 2rem;
@@ -82,16 +84,8 @@ pre>code {
     overflow: auto;
 }
 p code, li code {
-    margin-inline-start: 0.4em;
-    margin-inline-end: 0.4em;
-
-    font-size: 1.2em;
-    /* border: 1px solid rgba(128, 128, 128, 0.5); */
-    background-color: var(--inline-block-bg-color);
-    border-radius: 0.6em;
-    word-break: break-all;
-
-    padding: 0.1em 0.4em;
+    Font-size: 115%;
+    word-break: break-word;
 }
 
 select, input, button {

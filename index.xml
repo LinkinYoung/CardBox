@@ -8,6 +8,21 @@
     <language>zh-cn</language>
     <lastBuildDate>Tue, 10 May 2022 14:59:38 +0800</lastBuildDate><atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>REF21C2 Cocoa Objects</title>
+      <link>https://example.org/ref21c2.html</link>
+      <pubDate>Thu, 12 May 2022 16:10:13 +0800</pubDate>
+      
+      <guid>https://example.org/ref21c2.html</guid>
+      <description>文章链接: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW31
+文献卡片备注
+此卡片为文献卡片。文献卡片使用精炼的语言总结原始文献的内容，并可能带有指向其他卡片的链接。文献卡片不追求完整还原原始文献，建议读者结合此类卡片完整阅读原始文献。
+ 　本章主要介绍 Cocoa 与 Objective-C 的关系，以及 Cocoa 提供的重要基类 NSObject。本章也介绍了如何使用 Objective-C 从一个对象向另一个对象发送消息和接受返回值。
+1 A Simple Cocoa Command-Line Tool 　以一个简单的 Cocoa 命令行工具为例。此工具将参数去重，然后按字典顺序打印出来：
+localhost&amp;gt; SimpleCocoaTool a z c a l q m z a c l m q z 源代码如下：
+#import &amp;lt;Foundation/Foundation.h&amp;gt;  int main (int argc, const char * argv[]) { NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; NSArray *param = [[NSProcessInfo processInfo] arguments]; NSCountedSet *cset = [[NSCountedSet alloc] initWithArray:param]; NSArray *sorted_args = [[cset allObjects] sortedArrayUsingSelector:@selector(compare:)]; NSEnumerator *enm = [sorted_args objectEnumerator]; id word; while (word = [enm nextObject]) { printf(&amp;#34;%s\n&amp;#34;, [word UTF8String]); } [cset release]; [pool release]; return 0; } 此代码使用一个自动释放池（NSAutoreleasePool）管理内存，使用数组（NSArray）和集合（NSCountedSet） 去重和排序，使用迭代器（NSEnumerator） 遍历排序后的数组并打印。</description>
+    </item>
+    
+    <item>
       <title>REF21C1 What is Cocoa?</title>
       <link>https://example.org/ref21c1.html</link>
       <pubDate>Wed, 11 May 2022 14:54:52 +0800</pubDate>

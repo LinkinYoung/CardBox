@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="dark light">
+        <title>REF21C2 Cocoa Objects - 卡片盒</title>
+        <link rel="apple-touch-icon" href='./apple-touch-icon.png'>
+        <link rel="shortcut icon" href='./icon.png'>
+        <link rel="mask-icon" href='./mask-icon.svg' color="#4682b4">
+        <meta name="description" content="介绍 OC 的优势和基本用法以及 Cocoa 对象的共通行为、接口和生命周期。">
+        <meta name="author" content="杨林青">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href='./chroma/syntax.css'>
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href='./chroma/dracula.css'>
+        <link rel="stylesheet" href='./style.css'>
+        <script defer src='./fontawesome/all.min.js'></script>
+    </head>
+    <body>
+        <header>
+            <kb:title>
+                <aside>章节</aside>
+                <b>REF21C2 Cocoa Objects</b>
+            </kb:title>
+        </header>
+        <main>
+            <kb:title>
+                <aside>章节</aside>
+                <h1>REF21C2 Cocoa Objects</h1>
+            </kb:title>
+            <kb:description>介绍 OC 的优势和基本用法以及 Cocoa 对象的共通行为、接口和生命周期。</kb:description>
+            <kb:content><p>文章链接: <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW31">https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW31</a></p>
+<aside class=''>
+    <p><strong>文献卡片备注</strong><br>
+　　此卡片为文献卡片。文献卡片使用精炼的语言总结原始文献的内容，并可能带有指向其他卡片的链接。文献卡片不追求完整还原原始文献，建议读者结合此类卡片完整阅读原始文献。</p>
+
+</aside>
+<p>　　本章主要介绍 Cocoa 与 Objective-C 的关系，以及 Cocoa 提供的重要基类 NSObject。本章也介绍了如何使用 Objective-C 从一个对象向另一个对象发送消息和接受返回值。</p>
+<h2 id="1-a-simple-cocoa-command-line-tool">1 A Simple Cocoa Command-Line Tool</h2>
+<p>　　以一个简单的 Cocoa 命令行工具为例。此工具将参数去重，然后按字典顺序打印出来：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">localhost&gt; SimpleCocoaTool a z c a l q m z
+</span></span><span class="line"><span class="cl">a
+</span></span><span class="line"><span class="cl">c
+</span></span><span class="line"><span class="cl">l
+</span></span><span class="line"><span class="cl">m
+</span></span><span class="line"><span class="cl">q
+</span></span><span class="line"><span class="cl">z
+</span></span></code></pre></div><p>源代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-objective-c" data-lang="objective-c"><span class="line"><span class="cl"><span class="cp">#import &lt;Foundation/Foundation.h&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span> 
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NSAutoreleasePool</span> <span class="o">*</span><span class="n">pool</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSAutoreleasePool</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NSArray</span> <span class="o">*</span><span class="n">param</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSProcessInfo</span> <span class="n">processInfo</span><span class="p">]</span> <span class="n">arguments</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NSCountedSet</span> <span class="o">*</span><span class="n">cset</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSCountedSet</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithArray</span><span class="p">:</span><span class="n">param</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NSArray</span> <span class="o">*</span><span class="n">sorted_args</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cset</span> <span class="n">allObjects</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">sortedArrayUsingSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">compare</span><span class="p">:)];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NSEnumerator</span> <span class="o">*</span><span class="n">enm</span> <span class="o">=</span> <span class="p">[</span><span class="n">sorted_args</span> <span class="n">objectEnumerator</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">id</span> <span class="n">word</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">word</span> <span class="o">=</span> <span class="p">[</span><span class="n">enm</span> <span class="n">nextObject</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="p">[</span><span class="n">word</span> <span class="n">UTF8String</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="n">cset</span> <span class="k">release</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="n">pool</span> <span class="k">release</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>此代码使用一个自动释放池（NSAutoreleasePool）管理内存，使用数组（NSArray）和集合（NSCountedSet） 去重和排序，使用迭代器（NSEnumerator） 遍历排序后的数组并打印。</p>
+<p>　　本章接下来的部分介绍此代码中的 OC 部分。</p>
+<h2 id="2-object-oriented-programming-with-objective-c">2 Object-Oriented Programming with Objective-C</h2>
+<h2 id="21-the-objective-c-advantage">2.1 The Objective-C Advantage</h2>
+<p>　　每一个 OC 对象有一个隐藏结构体，其第一个成员是一个 <code>isa</code> 指针，指向这个对象的类。OC 中的类也是一个对象，维护一个调度表，该表主要由对象方法实现组成。类对象还有一个指向超类的指针。根据这个引用链，对象可以访问他的所有方法和从超类继承的公开/保护方法（访问权限为 <code>public</code> 或 <code>protect</code>）。</p>
+<h2 id="22-the-dynamism-of-objective-c">2.2 The Dynamism of Objective-C</h2>
+<p>　　Objective-C 是一个动态性很强的语言，很多符号解析工作从编译和链接移到了运行时。OC 有以下动态性：</p>
+<ul>
+<li>Dynamic typing——运行时才确定对象的类</li>
+<li>Dynamic binding——运行时才确定要调用的方法</li>
+<li>Dynamic loading——运行时向程序添加新的模块</li>
+</ul>
+<p>　　OC 引入一个新的类型 <code>id</code> 表示任何 Cocoa 对象。下面的代码中，<code>word</code> 是 <code>id</code> 类型的变量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-objective-c" data-lang="objective-c"><span class="line"><span class="cl"><span class="kt">id</span> <span class="n">word</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">word</span> <span class="o">=</span> <span class="p">[</span><span class="n">enm</span> <span class="n">nextObject</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// do something with &#39;word&#39; variable....
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>　　<code>id</code> 类型的对象在运行时确定实际的类。<br>
+　　动态类型为动态绑定提供基础。动态绑定将决定调用哪一个方法推迟到运行时，即只有自消息到达对象时才确定调用哪个方法。当你向一个动态类型对象发送消息时，运行时根据对象的 <code>isa</code> 指针定位对象的类，然后从中查找要调用的方法。<br>
+　　有了动态加载，程序无需在启动时一口气载入所有的代码和资源。代码和本地化的资源以 bundle 的形式打包，通过 <code>NSBundle</code> 类的方法载入程序中。懒加载减少了程序的内存占用，使程序易于扩展（设计插件）。</p>
+<h2 id="23-extensions-to-the-objective-c-language">2.3 Extensions to the Objective-C Language</h2>
+<p>　　OC 提供四种扩展机制：categories，protocols，declared properties 和 fast enumeration。</p>
+<h2 id="231-categories">2.3.1 Categories</h2>
+<p>　　Categories 类似于 swift 中的 extension，可以直接给类增加方法。在运行时增加的方法与类自己的方法没有区别。类和子类的对象都可以调用 category 中的方法。定义 Category 与定义子类类似，category 名位于 <code>@interface</code> 或 <code>@implementation</code> 指令后，用小括号包裹。例如，为 <code>NSArray</code> 增加一个 <code>prettyPrintDescription</code> 方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-objective-c" data-lang="objective-c"><span class="line"><span class="cl"><span class="c1">// PrettyPrintCategory.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#import &lt;Foundation/NSArray.h&gt; </span><span class="c1">// if Foundation not already imported
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> 
+</span></span><span class="line"><span class="cl"><span class="k">@interface</span> <span class="nc">NSArray</span> <span class="nl">(PrettyPrintElements)</span>
+</span></span><span class="line"><span class="cl"><span class="p">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">prettyPrintDescription</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">@end</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-objective-c" data-lang="objective-c"><span class="line"><span class="cl"><span class="cp">#import “PrettyPrintCategory.h”
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span> 
+</span></span><span class="line"><span class="cl"><span class="k">@implementation</span> <span class="nc">NSArray</span> <span class="nl">(PrettyPrintElements)</span>
+</span></span><span class="line"><span class="cl"><span class="p">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">prettyPrintDescription</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// implementation code here...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">@end</span>
+</span></span></code></pre></div><p>　　Category 不能用于添加新的实例属性。Category 可以覆盖现有方法，但是由于不是继承，无法通过 <code>super</code> 调用原始实现。你可以用 category 为 <code>NSObject</code> 类添加方法，但是这会导致程序运行时所有对象都能调用你添加的方法。</p>
+<h2 id="2.3.2">2.3.2 Protocols</h2>
+<p>　　OC 中的 protocol 与 Java 中的 interface 类似。Protocol 中定义一系列公开的方法，可用于隐藏类型。实现了相同协议的对象可以在不知道对方类的情况下根据协议发送消息。</p>
+<aside class=''>
+    <p><strong>批注</strong><br>
+　　Swift 中的 protocol 还可以定义计算属性。</p>
+
+</aside>
+<p>　　Protocol 分为 formal 和 informal 两类。Informal protocol 是 <code>NSObject</code> 的 category，因此所有对象都隐含遵守 informal protocol。由于所有的对象都继承了 category 提供的默认实现，对象可以选择性的实现协议规定的方法。实现方法时应保证对 <code>respondsToSelector:</code> 消息返回 <code>true</code>。调用 informal protocol 定义的方法前应当首先发送 <code>respondsToSelector:</code> 消息检查对方是否实现了方法。</p>
+<h2 id="修订记录">修订记录</h2>
+<h3 id="2022-05-12t1610130800">2022-05-12T16:10:13+08:00</h3>
+<ul>
+<li>创建。</li>
+</ul>
+<h3 id="2022-05-12t1842040800">2022-05-12T18:42:04+08:00</h3>
+<ul>
+<li>阅读到 <a href="#2.3.2">Informal Protocols</a>。</li>
+</ul>
+</kb:content>
+        </main>
+        <footer>
+        <section>
+    <h2>相关内容</h2>
+    
+    <kb:topic>
+        <h3>下一页</h3>
+        <ul>
+        
+            
+            
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+    <kb:topic>
+        <h3>上一页</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><i class="far fa-bookmark content-type"></i><a href="./ref21c1.html">REF21C1 What is Cocoa?</a>
+    </p>
+    <p>介绍 Cocoa 的功能、框架和开发环境。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+    <kb:topic>
+        <h3>所属书籍</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><i class="fas fa-book content-type"></i><a href="./ref21.html">REF21 Cocoa Fundamentals Guide</a>
+    </p>
+    <p>介绍 Cocoa 的功能、概念、术语、结构和设计模式。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+    <kb:topic>
+        <h3>卡片和链接</h3>
+        <ul>
+        
+            
+            
+                
+                    <li>
+    <p><span class="content-type">索引</span><a href="./">卡片盒</a>
+    </p>
+    <p>我的公开卡片盒，使用 HUGO 构建。</p>
+</li>
+                
+            
+        
+        </ul>
+    </kb:topic>
+    
+</section><section class="info"><p>© 2022 杨林青</p></section>
+        <script src='./title.js'></script>
+        <script src='./mermaid/min.js'></script>
+        <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'neutral'});</script>
+        
+            <script src='./completeTOC.js'></script>
+        </footer>
+    </body>
+</html>
