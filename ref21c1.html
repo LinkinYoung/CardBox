@@ -61,10 +61,10 @@ Carbon Core, Launch Service, Core Foundation, Foundation</li>
 <p>　　竟然还有 Objective-C++ 这种语言！当时的 Xcode 界面看起来与现在也大不相同。当时似乎还没有 Git？<br>
 　　编译工具的细节见 <a href="https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/000-Introduction/Introduction.html#//apple_ref/doc/uid/TP40006904">Xcode Build System Guide</a>。</p>
 <h2 id="4-the-cocoa-frameworks">4 The Cocoa Frameworks</h2>
-<p>　　Cocoa 应用使用一个共同的根类——NSObject。尽管 Foundation 框架提供了另一个根类——NSProxy，但是很少用在 Cocoa 程序中。在 OC 中也可以定义自己的根类，不过需要编写大量与 OC 运行时交互的代码。</p>
+<p>　　这一节大致介绍了 Cocoa 框架中的主要框架和类。Cocoa 应用使用一个共同的根类——NSObject。尽管 Foundation 框架提供了另一个根类——NSProxy，但是很少用在 Cocoa 程序中。在 OC 中也可以定义自己的根类，不过需要编写大量与 OC 运行时交互的代码。</p>
 <h2 id="41-foundation">4.1 Foundation</h2>
-<h2 id="411-foundation-paradigms-and-policies">4.1.1 Foundation Paradigms and Policies</h2>
-<p>　　Foundation 框架包含一些范式和策略。</p>
+<p>4.1.1 Foundation Paradigms and Policies<br>
+　　Foundation 框架包含一些范式和策略。</p>
 <ul>
 <li><strong>类的可变版本</strong>：许多值类和容器类都有一个可变的版本，可变类永远是不可变类的子类。</li>
 <li><strong>类簇</strong>：类簇是一个抽象类和多个具体类，抽象类用作接口。根据上下文，特定的具体类会被使用。<br>
@@ -80,8 +80,41 @@ Carbon Core, Launch Service, Core Foundation, Foundation</li>
 <p>　　值对象包装基本数据类型（包括字符串、整型、浮点类型、日期、结构体和指针）的值。当比较两个值对象时比较的是其存储的值而非指针值。值对象常常用作其他对象的属性。除了值对象外，你也可以直接使用标量。</p>
 <h2 id="4122-集合">4.1.2.2 集合</h2>
 <p>　　NSArray、NSDictionary、NSSet。</p>
-<h2 id="42-appkit-os-x">4.2 AppKit (OS X)</h2>
-<h2 id="4.2.1">4.2.1 Overview of the AppKit Framework</h2>
+<h2 id="4.2">4.2 AppKit (OS X)</h2>
+<p>　　这一节主要介绍以下内容：<br>
+4.2.1 Overview of the AppKit Framework<br>
+4.2.2 General User-Interface Classes<br>
+4.2.3 Text and Fonts<br>
+4.2.4 Graphics and Colors<br>
+4.2.5 Printing and Faxing<br>
+4.2.6 Document and File-System Support<br>
+4.2.7 Internationalization and Character Input Support<br>
+4.2.8 Operating-System Services<br>
+4.2.9 Interface Builder Support</p>
+<h2 id="43-uikit-ios">4.3 UIKit (iOS)</h2>
+<p>　　这一节主要介绍以下内容：<br>
+4.3.1 Overview of UIKit Classes<br>
+4.3.2 Application Coordination<br>
+4.3.3 Differences in Event and Drawing Models<br>
+4.3.4 General User-Interface Classes<br>
+4.3.5 Text</p>
+<h2 id="431-overview-of-uikit-classes">4.3.1 Overview of UIKit Classes</h2>
+<p>　　与 AppKit 类似，大部分处理事件的 UIKit 的对象继承 UIRensonder。与 AppKit 不同的是 UIKit 不使用 cell，而是在 UIControl 中指定事件类型和目标。UIKit 也使用代理模式。</p>
+<h2 id="432-application-coordination">4.3.2 Application Coordination</h2>
+<p>　　iOS 下的应用被一个单例 UIApplication 对象管理。此对象管理 main event loop，跟踪窗口和视图，将事件分派到合适的 Responser 对象。<br>
+　　UIApplication 对象接受系统通知和应用事件，大部分使用代理处理，例如应用启动和结束、内存不足、时间更改等。</p>
+<h2 id="433-differences-in-event-and-drawing-models">4.3.3 Differences in Event and Drawing Models</h2>
+<p>　　UIKit 的事件包括了触控事件。UIKit 有一个手势识别器，将一系列触控事件识别为对应的手势，然后发送给对应的目标。</p>
+<h2 id="44-comparing-appkit-and-uikit-classes">4.4 Comparing AppKit and UIKit Classes</h2>
+<p>　　大部分 AppKit 与 UIKit 类名只有前缀不同。一般来说，UIKit 类比对应的 AppKit 类的方法更少。</p>
+<h2 id="45-core-data">4.5 Core Data</h2>
+<p>　　Core Data 框架管理对象图和持久化。对象图管理提供了以下功能：撤销/重做、数据验证、保证对象关系的完整性。<br>
+　　Core Data 的核心是托管对象（managed object）。一个托管对象是被 Core Data 管理的模型对象，是 <code>NSManagedObject</code> 的子类。描述托管对象的 schema 是托管数据模型，包含托管对象（实体）的描述。每个实体包含属性、关系和元数据，元数据包含实体名称和表示类。<br>
+　　托管对象上下文是一个管理对象图的对象，所有在对象图中的托管对象必须注册在一个上下文对象下。上下文对象允许应用添加和删除对象、提供撤销/重做机制。当存储托管对象时，上下文对象会验证数据。应用向上下文对象发送FetchRequest对象获取数据，FetchRequest对象包含一组查询条件（criteria）。<br>
+　　Core Data 使用持久栈（persistence stack）管理数据持久化。持久栈作为托管上下文和外部存储之间的中间层，包含两层对象，顶部是 Persistent Store Coordinator，底部是 Persistent Object Store。Persistent Object Store 管理外部存储（XML，sqlite文件等）。<br>
+　　最后，Core Data 包括一个 <code>NSPersistentDocument</code> 类作为 <code>NSDocument</code> 的子类，创建它自己的持久栈和托管上下文，将一个文档映射到一个外部存储中。</p>
+<h2 id="46-other-frameworks-with-a-cocoa-api">4.6 Other Frameworks with a Cocoa API</h2>
+<p>　　这部分简要介绍其他框架和对应文档的链接，包括 Sync Service、Address Book、Preference Panes、Screen Saver、WebKit、iAD、Map Kit、Event Kit、Core Motion、Core Location、Media Player。</p>
 <h2 id="5">5 A Bit of History</h2>
 <p>　　最初的 NeXTSTEP 发布于 1989 年，是一个基于 Mach 内核的操作系统。当时还没有 Foundation，动态库被称作 “Kit”。NeXTSTEP 包括 Application Kit、Sound Kit、Music Kit 和 Display PostScript 等技术。如今的 Foundation 框架在当时是 Application Kit 中定义的函数、结构体、常量和其他类型。<br>
 　　1993 年，OpenStep 出现。OpenStep 主要将 NextStep 中的 Application Kit 和 Display PostScript 移植到 Solaris。1994 年 OpenStep API 发布，首次将 Application Kit 和 Foundation 分开，并且使用 NS 前缀。<br>
@@ -94,7 +127,11 @@ Carbon Core, Launch Service, Core Foundation, Foundation</li>
 </ul>
 <h3 id="2022-05-11t1731020800">2022-05-11T17:31:02+08:00</h3>
 <ul>
-<li>读完 <a href="#4.2.1">4.2.1 Overview of the AppKit Framework</a> 和 <a href="#5">5 A Bit of History</a>。</li>
+<li>读完 <a href="#4.2">4.2.1 Overview of the AppKit Framework</a> 和 <a href="#5">5 A Bit of History</a>。</li>
+</ul>
+<h3 id="2022-05-12t1331510800">2022-05-12T13:31:51+08:00</h3>
+<ul>
+<li>完成此章所有内容。</li>
 </ul>
 </kb:content>
         </main>
