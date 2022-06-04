@@ -4,11 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
         <meta name="color-scheme" content="dark light">
-        <title>REF21C2 Cocoa Objects - 卡片盒</title>
+        <title>Cocoa Objects - 卡片盒</title>
         <link rel="apple-touch-icon" href='./apple-touch-icon.png'>
         <link rel="shortcut icon" href='./icon.png'>
         <link rel="mask-icon" href='./mask-icon.svg' color="#4682b4">
-        <meta name="description" content="介绍 OC 的优势和基本用法以及 Cocoa 对象的共通行为、接口和生命周期。">
+        <meta name="description" content="REF21C2 - 介绍 OC 的优势和基本用法以及 Cocoa 对象的共通行为、接口和生命周期。">
         <meta name="author" content="杨林青">
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href='./chroma/syntax.css'>
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href='./chroma/dracula.css'>
@@ -19,15 +19,15 @@
         <header>
             <kb:title>
                 <aside>章节</aside>
-                <b>REF21C2 Cocoa Objects</b>
+                <b>Cocoa Objects</b>
             </kb:title>
         </header>
         <main>
             <kb:title>
                 <aside>章节</aside>
-                <h1>REF21C2 Cocoa Objects</h1>
+                <h1>Cocoa Objects</h1>
             </kb:title>
-            <kb:description>介绍 OC 的优势和基本用法以及 Cocoa 对象的共通行为、接口和生命周期。</kb:description>
+            <kb:description>REF21C2 - 介绍 OC 的优势和基本用法以及 Cocoa 对象的共通行为、接口和生命周期。</kb:description>
             <kb:content><p>文章链接: <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW31">https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW31</a></p>
 <aside class=''>
     <p><strong>文献卡片备注</strong><br>
@@ -109,6 +109,8 @@
 
 </aside>
 <p>　　Protocol 分为 formal 和 informal 两类。Informal protocol 是 <code>NSObject</code> 的 category，因此所有对象都隐含遵守 informal protocol。由于所有的对象都继承了 category 提供的默认实现，对象可以选择性的实现协议规定的方法。实现方法时应保证对 <code>respondsToSelector:</code> 消息返回 <code>true</code>。调用 informal protocol 定义的方法前应当首先发送 <code>respondsToSelector:</code> 消息检查对方是否实现了方法。</p>
+<h2 id="2.10">2.10 Creating a Singleton Instance</h2>
+<p>见<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaObjects/CocoaObjects.html#//apple_ref/doc/uid/TP40002974-CH4-SW32">原文</a>。</p>
 <h2 id="修订记录">修订记录</h2>
 <h3 id="2022-05-12t1610130800">2022-05-12T16:10:13+08:00</h3>
 <ul>
@@ -144,9 +146,9 @@
             
                 
                     <li>
-    <p><i class="far fa-bookmark content-type"></i><a href="./ref21c1.html">REF21C1 What is Cocoa?</a>
+    <p><i class="far fa-bookmark content-type"></i><a href="./ref21c1.html">What is Cocoa?</a>
     </p>
-    <p>介绍 Cocoa 的功能、框架和开发环境。</p>
+    <p>REF21C1 - 介绍 Cocoa 的功能、框架和开发环境。</p>
 </li>
                 
             
@@ -162,9 +164,9 @@
             
                 
                     <li>
-    <p><i class="fas fa-book content-type"></i><a href="./ref21.html">REF21 Cocoa Fundamentals Guide</a>
+    <p><i class="fa-solid fa-book content-type"></i><a href="./ref21.html">Cocoa Fundamentals Guide</a>
     </p>
-    <p>介绍 Cocoa 的功能、概念、术语、结构和设计模式。</p>
+    <p>REF21 - 介绍 Cocoa 的功能、概念、术语、结构和设计模式。</p>
 </li>
                 
             
@@ -180,7 +182,18 @@
             
                 
                     <li>
-    <p><span class="content-type">索引</span><a href="./">卡片盒</a>
+    <p><i class="fa-regular fa-rectangle-list content-type"></i><a href="./c43.html">Objective-C 与单例模式</a>
+    </p>
+    <p>C43 - 在 Objective-C 中实现单例。</p>
+</li>
+                
+            
+        
+            
+            
+                
+                    <li>
+    <p><i class="fa-regular fa-rectangle-list content-type"></i><a href="./">卡片盒</a>
     </p>
     <p>我的公开卡片盒，使用 HUGO 构建。</p>
 </li>
